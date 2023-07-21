@@ -1,0 +1,93 @@
+# general settings
+name: test_DiffIRGANS2
+model_type: DiffIRGANS2Model
+scale: 4
+num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
+manual_seed: 0
+
+
+
+# dataset and data loader settings
+datasets:
+  val_1:
+    name: NTIRE2020-Track1
+    type: PairedImageDataset
+    dataroot_gt: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-gt
+    dataroot_lq: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-input
+    io_backend:
+      type: disk
+
+  val_2:
+    name: AIM2019-Track2
+    type: PairedImageDataset
+    dataroot_gt: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-gt-clean
+    dataroot_lq: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-input-noisy
+    io_backend:
+      type: disk
+
+  val_3:
+    name: RealSR
+    type: PairedImageDataset
+    dataroot_lq: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/LR
+    dataroot_gt: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/HR
+    io_backend:
+      type: disk
+
+
+# network structures
+network_g:
+  type: DiffIRS2
+  n_encoder_res: 9
+  inp_channels: 3
+  out_channels: 3
+  dim: 64
+  num_blocks: [13,1,1,1]
+  num_refinement_blocks: 13
+  heads: [1,2,4,8]
+  ffn_expansion_factor: 2.2
+  bias: False
+  LayerNorm_type: BiasFree
+  n_denoise_res: 1
+  linear_start: 0.1
+  linear_end: 0.99
+  timesteps: 4
+
+# network structures
+network_S1:
+  type: DiffIRS1
+  n_encoder_res: 9
+  inp_channels: 3
+  out_channels: 3
+  dim: 64
+  num_blocks: [13,1,1,1]
+  num_refinement_blocks: 13
+  heads: [1,2,4,8]
+  ffn_expansion_factor: 2.2
+  bias: False
+  LayerNorm_type: BiasFree
+
+network_d:
+  type: UNetDiscriminatorSN
+  num_in_ch: 3
+  num_feat: 64
+  skip_connection: True
+
+# path
+path:
+  pretrain_network_S1: experiments/DiffIRS1.pth
+  pretrain_network_g: experiments/DiffIRS2-GAN.pth
+  param_key_g: params_ema
+  strict_load_g: False
+  ignore_resume_networks: network_S1
+
+
+
+val:
+  window_size: 8
+  save_img: True
+  suffix: ~  # add suffix to saved images, if None, use exp name
+
+
+
+
+

@@ -1,0 +1,5 @@
+# @package _group_
+data_root_dir: /mnt/bn/xiabinpaint/dataset/inpainting/place2/
+out_root_dir: experiments/
+tb_dir: tb_logs/
+pretrained_models: 

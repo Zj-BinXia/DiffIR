@@ -1,0 +1,152 @@
+# general settings
+name: train_DiffIRS2
+model_type: DiffIRS2Model
+scale: 1
+num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
+manual_seed: 0
+
+# dataset and data loader settings
+datasets:
+  train:
+    name: TrainSet
+    type: DeblurPairedDataset
+    dataroot_gt: /root/motion_deblur/train_crops/target_crops
+    dataroot_lq: /root/motion_deblur/train_crops/input_crops
+    geometric_augs: true
+
+    filename_tmpl: '{}'
+    io_backend:
+      type: disk
+
+
+    num_worker_per_gpu: 12
+    batch_size_per_gpu: 8
+    mini_batch_sizes: [8,4,2,2,1,1]             # Batch size per gpu   
+    iters: [150000,60000,50000,60000,40000,40000]
+    gt_size: 512   # Max patch size for progressive training
+    gt_sizes: [192, 256,320,384,464,512]  # Patch sizes for progressive training.
+
+    # data loader
+    use_shuffle: true
+    dataset_enlarge_ratio: 1
+    prefetch_mode: ~
+
+  # Uncomment these for validation
+  val:
+    name: ValSet
+    type: DeblurPairedDataset
+    dataroot_gt: /root/motion_deblur/val/GoPro/target_crops
+    dataroot_lq: /root/motion_deblur/val/GoPro/input_crops
+    io_backend:
+      type: disk
+
+# network structures
+network_g:
+  type: DiffIRS2
+  n_encoder_res: 5
+  inp_channels: 3
+  out_channels: 3
+  dim: 48
+  num_blocks: [3,5,6,6]
+  num_refinement_blocks: 4
+  heads: [1,2,4,8]
+  ffn_expansion_factor: 2
+  bias: False
+  LayerNorm_type: WithBias
+  n_denoise_res: 1
+  linear_start: 0.1
+  linear_end: 0.99
+  timesteps: 4
+
+# network structures
+network_S1:
+  type: DiffIRS1
+  n_encoder_res: 5
+  inp_channels: 3
+  out_channels: 3
+  dim: 48
+  num_blocks: [3,5,6,6]
+  num_refinement_blocks: 4
+  heads: [1,2,4,8]
+  ffn_expansion_factor: 2
+  bias: False
+  LayerNorm_type: WithBias
+
+
+
+# path
+path:
+  pretrain_network_g: experiments/train_DiffIRS1/models/net_g_latest.pth
+  pretrain_network_S1: experiments/train_DiffIRS1/models/net_g_latest.pth
+  param_key_g: params_ema
+  strict_load_g: False
+  resume_state: ~
+  ignore_resume_networks: network_S1
+
+# training settings
+train:
+  ema_decay: 0.999
+
+  optim_g:
+    type: Adam
+    lr: !!float 2e-4
+    weight_decay: 0
+    betas: [0.9, 0.99]
+
+  scheduler:
+    type: MultiStepLR
+    milestones: [300000]
+    gamma: 0.5
+
+  encoder_iter: 100000
+  total_iter: 400000
+  lr_encoder: !!float 2e-4
+  lr_sr: !!float 2e-4
+  gamma_encoder: 0.1
+  gamma_sr: 0.5
+  lr_decay_encoder: 60000
+  lr_decay_sr: 80000
+  warmup_iter: -1  # no warm up
+
+  mixing_augs:
+    mixup: false
+    mixup_beta: 1.2
+    use_identity: true
+
+  # losses
+  pixel_opt:
+    type: L1Loss
+    loss_weight: 1.0
+    reduction: mean
+
+  kd_opt:
+    type: KDLoss
+    loss_weight: 1
+    temperature: 0.15
+
+# Uncomment these for validation
+# validation settings
+val:
+  window_size: 8
+  val_freq: !!float 5e3
+  save_img: False
+
+  metrics:
+    psnr: # metric name
+      type: calculate_psnr
+      crop_border: 0
+      test_y_channel: false
+
+# logging settings
+logger:
+  print_freq: 1000
+  save_checkpoint_freq: !!float 5e3
+  use_tb_logger: true
+  wandb:
+    project: ~
+    resume_id: ~
+
+# dist training settings
+dist_params:
+  backend: nccl
+  port: 29500
