@@ -70,7 +70,7 @@ outdir=$(pwd)/inference/celeba_random_thick_256 model.checkpoint=last.ckpt
 
 ###  2. training
 
-**Train on CelebA dataset** 
+**2.1 Train on CelebA dataset** 
 
 train DiffIR_s1
 
@@ -90,7 +90,7 @@ python3 S1forS2.py
 sh train_celebahqS2.sh
 ```
 
-**Train on Place2-standard dataset** 
+**2.2 Train on Place2-standard dataset** 
 
 train DiffIR_s1
 
@@ -110,7 +110,7 @@ python3 S1forS2.py
 sh train_place256S2.sh
 ```
 
-**Train on Place2-Challenge dataset** 
+**2.3 Train on Place2-Challenge dataset** 
 
 train DiffIR_s1
 
