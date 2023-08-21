@@ -2,7 +2,7 @@
 
 This code is based on [LaMa](https://github.com/advimman/lama)
 
-###  Prepare training and testing data
+###  1. Prepare training and testing data
 
 **Places dataset** 
 
@@ -58,8 +58,7 @@ bash fetch_data/celebahq_dataset_prepare.sh
 # generate masks for test and visual_test at the end of epoch
 bash fetch_data/celebahq_gen_masks.sh
 
-# Run training
-python3 bin/train.py -cn lama-fourier-celeba data.batch_size=10
+
 
 # Infer model on thick/thin/medium masks in 256 and run evaluation 
 # like this:
@@ -69,15 +68,14 @@ indir=$(pwd)/celeba-hq-dataset/visual_test_256/random_thick_256/ \
 outdir=$(pwd)/inference/celeba_random_thick_256 model.checkpoint=last.ckpt
 ```
 
-2. Generate image patches from full-resolution training images of GoPro dataset
-```
-python generate_patches_gopro.py 
-```
+###  2. training
 
-3. To train Restormer, run
+
+
+**Traian on CelebA dataset** 
+train DiffIR_s1, run
 ```
-cd Restormer
-./train.sh Motion_Deblurring/Options/Deblurring_Restormer.yml
+train_celebahqS1.sh
 ```
 
 **Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [Restormer/train.sh](../train.sh) and [Motion_Deblurring/Options/Deblurring_Restormer.yml](Options/Deblurring_Restormer.yml)
