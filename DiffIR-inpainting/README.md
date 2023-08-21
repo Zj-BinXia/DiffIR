@@ -131,104 +131,55 @@ sh train_place256_bigLdataS2.sh
 ```
 
 
-**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [configs/training
-/location/places_big.yaml](configs/training
-/location/places_big.yaml)
+**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify datasets path in configs/training
+/location
 
 ## Evaluation
 
-Download the pre-trained [model](https://drive.google.com/drive/folders/1czMyfRTQDX3j3ErByYeZ1PM4GVLbJeGK?usp=sharing) and place it in `./pretrained_models/`
+Download the pre-trained [model](https://drive.google.com/drive/folders/1RQXRWMqVaAsyyQt8T-3KtpS68ef8dh90?usp=drive_link) and place it in `./experiments/`
 
-#### Testing on GoPro dataset
-
-- Download GoPro testset, run
-```
-python download_data.py --data test --dataset GoPro
-```
+#### Testing on CelebA dataset
 
 - Testing
 ```
-python test.py --dataset GoPro
-```
-
-#### Testing on HIDE dataset
-
-- Download HIDE testset, run
-```
-python download_data.py --data test --dataset HIDE
-```
-
-- Testing
-```
-python test.py --dataset HIDE
-```
-
-#### Testing on RealBlur-J dataset
-
-- Download RealBlur-J testset, run
-```
-python download_data.py --data test --dataset RealBlur_J
-```
-
-- Testing
-```
-python test.py --dataset RealBlur_J
-```
-
-#### Testing on RealBlur-R dataset
-
-- Download RealBlur-R testset, run
-```
-python download_data.py --data test --dataset RealBlur_R
-```
-
-- Testing
-```
-python test.py --dataset RealBlur_R
-```
-
-#### To reproduce PSNR/SSIM scores of the paper (Table 2) on GoPro and HIDE datasets, run this MATLAB script
-
-```
-evaluate_gopro_hide.m 
-```
-
-#### To reproduce PSNR/SSIM scores of the paper (Table 2) on RealBlur dataset, run
-
-```
-evaluate_realblur.py 
-```
-
-This code is based on LaMa
-
-Training, we take celeba-HQ as an example:
-
-Pretrain DiffIR$_{S1}$:
-
-sh train_celebahqS1.sh
-
-在训练DiffIR$_{S2}$前，我们要将 S1forS2.py文件中的path设置为S1阶段预训练好模型的地址，然后设定save_path,再运行
-
-python3 S1forS2.py
-
-得到celeba-ta.pth
-
-然后将configs/training/DiffIRS2-celeba.yaml中的generatorS2_path和generatorS1_path都设置为celeba-ta.pth的地址
-
-训练DiffIR$_{S2}$:
-
-sh train_celebahqS2.sh
-
-*******测试******
-
-设置test_celeba_256_thick.sh中的测设数据地址，以及模型地址，然后直接运行
-
 sh test_celeba_256_thick.sh
+```
 
-可以得到运行的图像结果
-
-然后运行,得到定量结果：
-
+- Calculating metric
+```
 sh eval_celeba_256_thick.sh
+```
+
+#### Testing on Place2-standard dataset
+
+
+- Testing
+```
+sh test_place2_512_thick.sh
+```
+
+- Calculating metric
+```
+sh eval_place2_512_thick.sh
+```
+
+#### Testing on Place2-Challenge dataset
+
+
+- Testing
+```
+sh test_place2_512_thick_big.sh
+```
+
+- Calculating metric
+```
+sh eval_place2_512_thick_big.sh
+```
+
+
+
+
+
+
 
 
