@@ -1,13 +1,14 @@
 import torch
-# path = "/mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-light/experiments/inpainting_2023-02-11_23-37-48_train_DiffIRT-celeba_/models/last.ckpt"
-# path = "/mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-light/experiments/inpainting_2023-02-10_11-28-11_train_DiffIRT-place2_/models/last.ckpt"
-path = "/mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-lightv2/experiments/inpainting_2023-02-19_23-03-29_train_DiffIRbigT-place2_/models/last.ckpt"
-save_path = "/mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-lightv2/placebig-ta.pth"
+path = "./experiments/DiffIRS1-celeba/models/last.ckpt"
+save_path = "./celeba-S1.pth"
+#path = "./experiments/DiffIRS1-place/models/last.ckpt"
+#save_path = "./place-S1.pth"
+#path = "./experiments/Big-DiffIRS1-place/models/last.ckpt"
+#save_path = "./placebig-S1.pth"
 s=torch.load(path)
-for k,v in s.items():
-    print(k)
+# for k,v in s.items():
+#    print(k)
 
-print("***************")
 # for k,v in s["state_dict"].items():
 #     if "evaluator" not in k and "loss" not in k and "discriminator" not in k:
 #         print(k)
