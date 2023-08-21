@@ -73,11 +73,24 @@ outdir=$(pwd)/inference/celeba_random_thick_256 model.checkpoint=last.ckpt
 
 
 **Traian on CelebA dataset** 
-train DiffIR_s1, run
+
+train DiffIR_s1
+
 ```
-train_celebahqS1.sh
+sh train_celebahqS1.sh
 ```
 
+train DiffIR_s2
+
+```
+# convert pretrained model of DiffIR_s1
+# modify the "path" item in S1forS2.py to the path of the checkpoint of DiffIR_S1 and obtain celeba-S1.pth
+python3 S1forS2.py 
+```
+```
+#set the "generatorS2_path" and "generatorS1_path" items of configs/training/DiffIRS2-celeba.yaml to the path of celeba-S1.pth
+sh train_celebahqS2.sh
+```
 **Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [Restormer/train.sh](../train.sh) and [Motion_Deblurring/Options/Deblurring_Restormer.yml](Options/Deblurring_Restormer.yml)
 
 ## Evaluation
