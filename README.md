@@ -14,7 +14,13 @@
 
 ## Installation
 
-See [pip.sh](DiffIR-inpainting/pip.sh) for the installation of dependencies required to run DiffIR.
+For inpainting, see [pip.sh](DiffIR-inpainting/pip.sh) for the installation of dependencies required to run DiffIR.
+
+For GAN based single-image super-resolution, see [pip.sh](DiffIR-SRGAN/pip.sh) for the installation of dependencies required to run DiffIR.
+
+For real-world super-resolution, see [pip.sh](DiffIR-RealSR/pip.sh) for the installation of dependencies required to run DiffIR.
+
+For motion deblurring, see [pip.sh](DiffIR-demotionblur/pip.sh) for the installation of dependencies required to run DiffIR.
 
 
 
