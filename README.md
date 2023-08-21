@@ -1,4 +1,4 @@
-## Diffir: Efficient diffusion model for image restoration (ICCV2023)
+## DiffIR: Efficient diffusion model for image restoration (ICCV2023)
 
 [Paper](https://arxiv.org/pdf/2303.09472.pdf) | [Project Page](https://github.com/Zj-BinXia/DiffIR)
 
