@@ -1,3 +1,120 @@
+## Training
+
+1. To download Places training and testing data, run
+```
+# Download data from http://places2.csail.mit.edu/download.html
+# Places365-Standard: Train(105GB)/Test(19GB)/Val(2.1GB) from High-resolution images section
+wget http://data.csail.mit.edu/places/places365/train_large_places365standard.tar
+wget http://data.csail.mit.edu/places/places365/val_large.tar
+wget http://data.csail.mit.edu/places/places365/test_large.tar
+
+# Unpack train/test/val data and create .yaml config for it
+bash fetch_data/places_standard_train_prepare.sh
+bash fetch_data/places_standard_test_val_prepare.sh
+
+# Sample images for test and viz at the end of epoch
+bash fetch_data/places_standard_test_val_sample.sh
+bash fetch_data/places_standard_test_val_gen_masks.sh
+
+# Run training
+python3 bin/train.py -cn lama-fourier location=places_standard
+
+# To evaluate trained model and report metrics as in our paper
+# we need to sample previously unseen 30k images and generate masks for them
+bash fetch_data/places_standard_evaluation_prepare_data.sh
+
+# Infer model on thick/thin/medium masks in 256 and 512 and run evaluation 
+# like this:
+python3 bin/predict.py \
+model.path=$(pwd)/experiments/<user>_<date:time>_lama-fourier_/ \
+indir=$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
+outdir=$(pwd)/inference/random_thick_512 model.checkpoint=last.ckpt
+
+python3 bin/evaluate_predicts.py \
+$(pwd)/configs/eval2_gpu.yaml \
+$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
+$(pwd)/inference/random_thick_512 \
+$(pwd)/inference/random_thick_512_metrics.csv
+```
+
+2. Generate image patches from full-resolution training images of GoPro dataset
+```
+python generate_patches_gopro.py 
+```
+
+3. To train Restormer, run
+```
+cd Restormer
+./train.sh Motion_Deblurring/Options/Deblurring_Restormer.yml
+```
+
+**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [Restormer/train.sh](../train.sh) and [Motion_Deblurring/Options/Deblurring_Restormer.yml](Options/Deblurring_Restormer.yml)
+
+## Evaluation
+
+Download the pre-trained [model](https://drive.google.com/drive/folders/1czMyfRTQDX3j3ErByYeZ1PM4GVLbJeGK?usp=sharing) and place it in `./pretrained_models/`
+
+#### Testing on GoPro dataset
+
+- Download GoPro testset, run
+```
+python download_data.py --data test --dataset GoPro
+```
+
+- Testing
+```
+python test.py --dataset GoPro
+```
+
+#### Testing on HIDE dataset
+
+- Download HIDE testset, run
+```
+python download_data.py --data test --dataset HIDE
+```
+
+- Testing
+```
+python test.py --dataset HIDE
+```
+
+#### Testing on RealBlur-J dataset
+
+- Download RealBlur-J testset, run
+```
+python download_data.py --data test --dataset RealBlur_J
+```
+
+- Testing
+```
+python test.py --dataset RealBlur_J
+```
+
+#### Testing on RealBlur-R dataset
+
+- Download RealBlur-R testset, run
+```
+python download_data.py --data test --dataset RealBlur_R
+```
+
+- Testing
+```
+python test.py --dataset RealBlur_R
+```
+
+#### To reproduce PSNR/SSIM scores of the paper (Table 2) on GoPro and HIDE datasets, run this MATLAB script
+
+```
+evaluate_gopro_hide.m 
+```
+
+#### To reproduce PSNR/SSIM scores of the paper (Table 2) on RealBlur dataset, run
+
+```
+evaluate_realblur.py 
+```
+
+
 This code is based on real-ESRGAN
 
 **数据集
