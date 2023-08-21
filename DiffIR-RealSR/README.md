@@ -79,13 +79,7 @@ Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd
 
 #### Testing on NTIRE2020-Track1 dataset
 
-- Testing
-```
-# modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
-sh test.sh 
-```
-
-#### Testing on AIM2019-Track2 dataset
+Download  NTIRE2020 datasets [Link](https://competitions.codalab.org/competitions/22220)
 
 - Testing
 ```
@@ -103,39 +97,14 @@ Download Canon datasets Link: [Google Drive](https://drive.google.com/open?id=17
 sh test.sh 
 ```
 
-#### To reproduce PSNR/SSIM scores of the paper on GoPro and HIDE datasets, run this MATLAB script
+#### To reproduce PSNR/LPIPS/DISTS scores of the paper
 
 ```
-evaluate_gopro_hide.m 
+python3  Metric/PSNR.py --folder_gt PathtoGT  --folder_restored PathtoSR
+
+python3  Metric/LPIPS.py --folder_gt PathtoGT  --folder_restored PathtoSR
+
+python3  Metric/dists.py --folder_gt PathtoGT  --folder_restored PathtoSR
 ```
 
 
-
-
-
-**数据集
-
-制作流程详见real-esrgan,把DF2K预先切块，可以加快读取速度
-
-**Training:
-
-先跑
-sh train_DiffIRS1.sh
-
-得到最后的模型命名为DiffIRS1.pth，然后将这个模型的地址贴到
-options/train_DiffIRS2_x4.yml的pretrain_network_g与 pretrain_network_S1去
-
-然后运行
-sh train_DiffIRS2.sh
-
-然后将模型命名为DiffIRS2.pth，然后将这个模型的地址贴到
-/options/train_DiffIRS2_GAN_x4.yml的pretrain_network_g上去
-
-然后运行
-sh train_DiffIRS2_GAN.sh
-
-**Testing:
-
-sh test.sh
-
-指标测试工具，PSNR,SSIM,LPIPS 我用的是MM-realSR里提供的工具
