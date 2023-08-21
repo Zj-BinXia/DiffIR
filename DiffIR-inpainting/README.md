@@ -2,7 +2,7 @@
 
 This code is based on [LaMa](https://github.com/advimman/lama)
 
-1. Prepare training and testing data
+###  Prepare training and testing data
 
 **Places dataset** 
 
