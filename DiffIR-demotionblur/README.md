@@ -18,6 +18,7 @@ sh trainS1.sh
 4. To train DiffIR_S2, run
 ```
 #set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2.yml to be the path of DiffIR_S1's pre-trained model
+
 sh trainS2.sh
 ```
 
@@ -37,6 +38,7 @@ python download_data.py --data test --dataset GoPro
 - Testing
 ```
 # modify the dataset path in ./options/test_DiffIRS2.yml
+
 sh test.sh 
 ```
 
@@ -50,6 +52,7 @@ python download_data.py --data test --dataset HIDE
 - Testing
 ```
 # modify the dataset path in ./options/test_DiffIRS2.yml
+
 sh test.sh
 ```
 
