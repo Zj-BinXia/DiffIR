@@ -131,7 +131,9 @@ sh train_place256_bigLdataS2.sh
 ```
 
 
-**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [Restormer/train.sh](../train.sh) and [Motion_Deblurring/Options/Deblurring_Restormer.yml](Options/Deblurring_Restormer.yml)
+**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [configs/training
+/location/places_big.yaml](configs/training
+/location/places_big.yaml)
 
 ## Evaluation
 
