@@ -79,16 +79,19 @@ Experiments are performed for different image processing tasks including, inpain
 
 <details>
 <summary><strong>GAN-based single-image super-resolution</strong> (click to expand) </summary>
+  
 <img src = "figs/SISR-qual.jpg">
 <details>
 
 <details>
 <summary><strong>Real-world super-resolution</strong> (click to expand) </summary>
+  
 <img src = "figs/realworldsr-quan.jpg">
 </details>
 
 <details>
 <summary><strong>Motion deblurring</strong> (click to expand) </summary>
+  
 <img src = "figs/deblur-quan.jpg">
 </details>
 
