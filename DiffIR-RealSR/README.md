@@ -84,6 +84,7 @@ Download  NTIRE2020 datasets [Link](https://competitions.codalab.org/competition
 - Testing
 ```
 # modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
+
 sh test.sh 
 ```
 
@@ -94,6 +95,7 @@ Download Canon datasets Link: [Google Drive](https://drive.google.com/open?id=17
 - Testing
 ```
 # modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
+
 sh test.sh 
 ```
 
