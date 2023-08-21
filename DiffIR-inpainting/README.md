@@ -28,18 +28,6 @@ python3 bin/train.py -cn lama-fourier location=places_standard
 # we need to sample previously unseen 30k images and generate masks for them
 bash fetch_data/places_standard_evaluation_prepare_data.sh
 
-# Infer model on thick/thin/medium masks in 256 and 512 and run evaluation 
-# like this:
-python3 bin/predict.py \
-model.path=$(pwd)/experiments/<user>_<date:time>_lama-fourier_/ \
-indir=$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
-outdir=$(pwd)/inference/random_thick_512 model.checkpoint=last.ckpt
-
-python3 bin/evaluate_predicts.py \
-$(pwd)/configs/eval2_gpu.yaml \
-$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
-$(pwd)/inference/random_thick_512 \
-$(pwd)/inference/random_thick_512_metrics.csv
 ```
 
 **CelebA dataset** 
@@ -58,14 +46,6 @@ bash fetch_data/celebahq_dataset_prepare.sh
 # generate masks for test and visual_test at the end of epoch
 bash fetch_data/celebahq_gen_masks.sh
 
-
-
-# Infer model on thick/thin/medium masks in 256 and run evaluation 
-# like this:
-python3 bin/predict.py \
-model.path=$(pwd)/experiments/<user>_<date:time>_lama-fourier-celeba_/ \
-indir=$(pwd)/celeba-hq-dataset/visual_test_256/random_thick_256/ \
-outdir=$(pwd)/inference/celeba_random_thick_256 model.checkpoint=last.ckpt
 ```
 
 ###  2. training
