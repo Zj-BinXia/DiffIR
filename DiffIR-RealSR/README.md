@@ -1,58 +1,74 @@
 ## Training
 
-1. To download Places training and testing data, run
-```
-# Download data from http://places2.csail.mit.edu/download.html
-# Places365-Standard: Train(105GB)/Test(19GB)/Val(2.1GB) from High-resolution images section
-wget http://data.csail.mit.edu/places/places365/train_large_places365standard.tar
-wget http://data.csail.mit.edu/places/places365/val_large.tar
-wget http://data.csail.mit.edu/places/places365/test_large.tar
+This code is based on [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)
 
-# Unpack train/test/val data and create .yaml config for it
-bash fetch_data/places_standard_train_prepare.sh
-bash fetch_data/places_standard_test_val_prepare.sh
+### 1. Dataset Preparation
 
-# Sample images for test and viz at the end of epoch
-bash fetch_data/places_standard_test_val_sample.sh
-bash fetch_data/places_standard_test_val_gen_masks.sh
+We use DF2K (DIV2K and Flickr2K) + OST datasets for our training. Only HR images are required. <br>
+You can download from :
 
-# Run training
-python3 bin/train.py -cn lama-fourier location=places_standard
+1. DIV2K: http://data.vision.ee.ethz.ch/cvl/DIV2K/DIV2K_train_HR.zip
+2. Flickr2K: https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar
+3. OST: https://openmmlab.oss-cn-hangzhou.aliyuncs.com/datasets/OST_dataset.zip
 
-# To evaluate trained model and report metrics as in our paper
-# we need to sample previously unseen 30k images and generate masks for them
-bash fetch_data/places_standard_evaluation_prepare_data.sh
+Here are steps for data preparation.
 
-# Infer model on thick/thin/medium masks in 256 and 512 and run evaluation 
-# like this:
-python3 bin/predict.py \
-model.path=$(pwd)/experiments/<user>_<date:time>_lama-fourier_/ \
-indir=$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
-outdir=$(pwd)/inference/random_thick_512 model.checkpoint=last.ckpt
+#### Step 1: [Optional] Generate multi-scale images
 
-python3 bin/evaluate_predicts.py \
-$(pwd)/configs/eval2_gpu.yaml \
-$(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
-$(pwd)/inference/random_thick_512 \
-$(pwd)/inference/random_thick_512_metrics.csv
+For the DF2K dataset, we use a multi-scale strategy, *i.e.*, we downsample HR images to obtain several Ground-Truth images with different scales. <br>
+You can use the [scripts/generate_multiscale_DF2K.py](scripts/generate_multiscale_DF2K.py) script to generate multi-scale images. <br>
+Note that this step can be omitted if you just want to have a fast try.
+
+```bash
+python scripts/generate_multiscale_DF2K.py --input datasets/DF2K/DF2K_HR --output datasets/DF2K/DF2K_multiscale
 ```
 
-2. Generate image patches from full-resolution training images of GoPro dataset
-```
-python generate_patches_gopro.py 
+#### Step 2: [Optional] Crop to sub-images
+
+We then crop DF2K images into sub-images for faster IO and processing.<br>
+This step is optional if your IO is enough or your disk space is limited.
+
+You can use the [scripts/extract_subimages.py](scripts/extract_subimages.py) script. Here is the example:
+
+```bash
+ python scripts/extract_subimages.py --input datasets/DF2K/DF2K_multiscale --output datasets/DF2K/DF2K_multiscale_sub --crop_size 400 --step 200
 ```
 
-3. To train Restormer, run
-```
-cd Restormer
-./train.sh Motion_Deblurring/Options/Deblurring_Restormer.yml
+#### Step 3: Prepare a txt for meta information
+
+You need to prepare a txt file containing the image paths. The following are some examples in `meta_info_DF2Kmultiscale+OST_sub.txt` (As different users may have different sub-images partitions, this file is not suitable for your purpose and you need to prepare your own txt file):
+
+```txt
+DF2K_HR_sub/000001_s001.png
+DF2K_HR_sub/000001_s002.png
+DF2K_HR_sub/000001_s003.png
+...
 ```
 
-**Note:** The above training script uses 8 GPUs by default. To use any other number of GPUs, modify [Restormer/train.sh](../train.sh) and [Motion_Deblurring/Options/Deblurring_Restormer.yml](Options/Deblurring_Restormer.yml)
+You can use the [scripts/generate_meta_info.py](scripts/generate_meta_info.py) script to generate the txt file. <br>
+You can merge several folders into one meta_info txt. Here is the example:
+
+```bash
+ python scripts/generate_meta_info.py --input datasets/DF2K/DF2K_HR datasets/DF2K/DF2K_multiscale --root datasets/DF2K datasets/DF2K --meta_info datasets/DF2K/meta_info/meta_info_DF2Kmultiscale.txt
+```
+
+### 2.  Pretrain DiffIR_S1
+```
+sh trainS1.sh
+```
+
+### 3.  Train DiffIR_S2
+
+```
+#set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2.yml to be the path of DiffIR_S1's pre-trained model
+sh trainS2.sh
+```
+
+**Note:** The above training script uses 8 GPUs by default. 
 
 ## Evaluation
 
-Download the pre-trained [model](https://drive.google.com/drive/folders/1czMyfRTQDX3j3ErByYeZ1PM4GVLbJeGK?usp=sharing) and place it in `./pretrained_models/`
+Download the pre-trained [model](https://drive.google.com/drive/folders/1JWYaP9VVPX_Mh2w1Vezn74hck-oWSyMh?usp=drive_link) and place it in `./experiments/`
 
 #### Testing on GoPro dataset
 
@@ -63,7 +79,8 @@ python download_data.py --data test --dataset GoPro
 
 - Testing
 ```
-python test.py --dataset GoPro
+# modify the dataset path in ./options/test_DiffIRS2.yml
+sh test.sh 
 ```
 
 #### Testing on HIDE dataset
@@ -75,47 +92,19 @@ python download_data.py --data test --dataset HIDE
 
 - Testing
 ```
-python test.py --dataset HIDE
+# modify the dataset path in ./options/test_DiffIRS2.yml
+sh test.sh
 ```
 
-#### Testing on RealBlur-J dataset
-
-- Download RealBlur-J testset, run
-```
-python download_data.py --data test --dataset RealBlur_J
-```
-
-- Testing
-```
-python test.py --dataset RealBlur_J
-```
-
-#### Testing on RealBlur-R dataset
-
-- Download RealBlur-R testset, run
-```
-python download_data.py --data test --dataset RealBlur_R
-```
-
-- Testing
-```
-python test.py --dataset RealBlur_R
-```
-
-#### To reproduce PSNR/SSIM scores of the paper (Table 2) on GoPro and HIDE datasets, run this MATLAB script
+#### To reproduce PSNR/SSIM scores of the paper on GoPro and HIDE datasets, run this MATLAB script
 
 ```
 evaluate_gopro_hide.m 
 ```
 
-#### To reproduce PSNR/SSIM scores of the paper (Table 2) on RealBlur dataset, run
-
-```
-evaluate_realblur.py 
-```
 
 
-This code is based on real-ESRGAN
+
 
 **数据集
 
