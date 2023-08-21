@@ -1,7 +1,5 @@
 ## Training
 
-This code is based on [Real-ESRGAN](https://github.com/xinntao/Real-ESRGAN)
-
 ### 1. Dataset Preparation
 
 We use DF2K (DIV2K and Flickr2K) + OST datasets for our training. Only HR images are required. <br>
@@ -60,7 +58,16 @@ sh trainS1.sh
 ### 3.  Train DiffIR_S2
 
 ```
-#set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2.yml to be the path of DiffIR_S1's pre-trained model
+#set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2_x4.yml to be the path of DiffIR_S1's pre-trained model
+
+sh trainS2.sh
+```
+
+### 4.  Train DiffIR_S2_GAN
+
+```
+#set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2_GAN_x4.yml to be the path of DiffIR_S2 and DiffIR_S1's trained model, respectively.
+
 sh trainS2.sh
 ```
 
@@ -68,32 +75,32 @@ sh trainS2.sh
 
 ## Evaluation
 
-Download the pre-trained [model](https://drive.google.com/drive/folders/1JWYaP9VVPX_Mh2w1Vezn74hck-oWSyMh?usp=drive_link) and place it in `./experiments/`
+Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd-uBpIXGZFdWzH1uVCOpJaqkOF?usp=drive_link) and place it in `./experiments/`
 
-#### Testing on GoPro dataset
-
-- Download GoPro testset, run
-```
-python download_data.py --data test --dataset GoPro
-```
+#### Testing on NTIRE2020-Track1 dataset
 
 - Testing
 ```
-# modify the dataset path in ./options/test_DiffIRS2.yml
+# modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
 sh test.sh 
 ```
 
-#### Testing on HIDE dataset
-
-- Download HIDE testset, run
-```
-python download_data.py --data test --dataset HIDE
-```
+#### Testing on AIM2019-Track2 dataset
 
 - Testing
 ```
-# modify the dataset path in ./options/test_DiffIRS2.yml
-sh test.sh
+# modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
+sh test.sh 
+```
+
+#### Testing on RealSRSet dataset
+
+Download Canon datasets Link: [Google Drive](https://drive.google.com/open?id=17ZMjo-zwFouxnm_aFM6CUHBwgRrLZqIM), [Baidu Drive](https://pan.baidu.com/s/1dn4q-7E2_iJkNXx4MPdVng)(code: 2n93)
+
+- Testing
+```
+# modify the dataset path in ./options/test_DiffIRS2_GAN_x4.yml
+sh test.sh 
 ```
 
 #### To reproduce PSNR/SSIM scores of the paper on GoPro and HIDE datasets, run this MATLAB script
