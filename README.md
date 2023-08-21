@@ -14,7 +14,7 @@
 
 ## Installation
 
-See [INSTALL.md](INSTALL.md) for the installation of dependencies required to run Restormer.
+See [INSTALL.md](INSTALL.md) for the installation of dependencies required to run DiffIR.
 
 
 
