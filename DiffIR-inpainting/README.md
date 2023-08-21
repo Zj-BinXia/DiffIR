@@ -2,11 +2,9 @@
 
 This code is based on [LaMa](https://github.com/advimman/lama)
 
-
-
 1. Prepare training and testing data
 
-**Places** 
+**Places dataset** 
 
 ```
 # Download data from http://places2.csail.mit.edu/download.html
@@ -42,6 +40,33 @@ $(pwd)/configs/eval2_gpu.yaml \
 $(pwd)/places_standard_dataset/evaluation/random_thick_512/ \
 $(pwd)/inference/random_thick_512 \
 $(pwd)/inference/random_thick_512_metrics.csv
+```
+
+**CelebA dataset** 
+
+```
+# Make shure you are in lama folder
+cd lama
+export TORCH_HOME=$(pwd) && export PYTHONPATH=$(pwd)
+
+# Download CelebA-HQ dataset
+# Download data256x256.zip from https://drive.google.com/drive/folders/11Vz0fqHS2rXDb5pprgTjpD7S2BAJhi1P
+
+# unzip & split into train/test/visualization & create config for it
+bash fetch_data/celebahq_dataset_prepare.sh
+
+# generate masks for test and visual_test at the end of epoch
+bash fetch_data/celebahq_gen_masks.sh
+
+# Run training
+python3 bin/train.py -cn lama-fourier-celeba data.batch_size=10
+
+# Infer model on thick/thin/medium masks in 256 and run evaluation 
+# like this:
+python3 bin/predict.py \
+model.path=$(pwd)/experiments/<user>_<date:time>_lama-fourier-celeba_/ \
+indir=$(pwd)/celeba-hq-dataset/visual_test_256/random_thick_256/ \
+outdir=$(pwd)/inference/celeba_random_thick_256 model.checkpoint=last.ckpt
 ```
 
 2. Generate image patches from full-resolution training images of GoPro dataset
