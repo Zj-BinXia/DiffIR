@@ -87,12 +87,12 @@ Experiments are performed for different image processing tasks including, inpain
 ## Citation
 If you use DiffIR, please consider citing:
 
-@article{xia2023diffir,
-  title={Diffir: Efficient diffusion model for image restoration},
-  author={Xia, Bin and Zhang, Yulun and Wang, Shiyin and Wang, Yitong and Wu, Xinglong and Tian, Yapeng and Yang, Wenming and Van Gool, Luc},
-  journal={ICCV},
-  year={2023}
-}
+  @article{xia2023diffir,
+    title={Diffir: Efficient diffusion model for image restoration},
+    author={Xia, Bin and Zhang, Yulun and Wang, Shiyin and Wang, Yitong and Wu, Xinglong and Tian, Yapeng and Yang, Wenming and Van Gool, Luc},
+    journal={ICCV},
+    year={2023}
+  }
 
 
 ## Contact
