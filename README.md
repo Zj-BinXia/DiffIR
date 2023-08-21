@@ -87,12 +87,14 @@ Experiments are performed for different image processing tasks including, inpain
 <summary><strong>Real-world super-resolution</strong> (click to expand) </summary>
   
 <img src = "figs/realworldsr-quan.jpg">
+<img src = "figs/realworldsr-qual.jpg">
 </details>
 
 <details>
 <summary><strong>Motion deblurring</strong> (click to expand) </summary>
   
 <img src = "figs/deblur-quan.jpg">
+<img src = "figs/deblur-qual.jpg">
 </details>
 
 ## Citation
