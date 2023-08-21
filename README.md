@@ -73,17 +73,17 @@ Experiments are performed for different image processing tasks including, inpain
 
 <details>
 <summary><strong>Inpainting</strong> (click to expand) </summary>
-
+<img src = "figs/inpainting-quan.jpg"> 
 <img src = "figs/inpainting-qual.jpg"> 
 </details>
 
 <details>
 <summary><strong>GAN-based single-image super-resolution</strong> (click to expand) </summary>
-  
+<img src = "figs/SISR-quan.jpg">  
 <img src = "figs/SISR-qual.jpg">
 <details>
 
-<details>
+
 <summary><strong>Real-world super-resolution</strong> (click to expand) </summary>
   
 <img src = "figs/realworldsr-quan.jpg">
