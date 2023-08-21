@@ -5,8 +5,8 @@ training_model:
   visualize_each_iters: 1000
   concat_mask: true
   store_discr_outputs_for_vis: true
-  generatorS2_path: /mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-lightv2/place-ta.pth
-  generatorS1_path: /mnt/bn/xiabinpaint/ICCV-Inpainting/KDSR-inpainting-lightv2/place-ta.pth
+  generatorS2_path: ./place-S1.pth
+  generatorS1_path: ./place-S1.pth
 losses:
   l1:
     weight_missing: 0
