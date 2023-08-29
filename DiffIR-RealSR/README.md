@@ -68,7 +68,7 @@ sh trainS2.sh
 ```
 #set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2_GAN_x4.yml to be the path of DiffIR_S2 and DiffIR_S1's trained model, respectively.
 
-sh trainS2.sh
+sh train_DiffIRS2_GAN.sh
 ```
 
 **Note:** The above training script uses 8 GPUs by default. 
