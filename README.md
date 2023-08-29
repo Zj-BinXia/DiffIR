@@ -4,7 +4,7 @@
 
 #### News
 
-- **August 28, 2023:** For real-world SR tasks, we released a [RealworldSR-DiffIRS2-GANV2](https://drive.google.com/drive/folders/1G3Ep0xd-uBpIXGZFdWzH1uVCOpJaqkOF?usp=sharing) that is more focused on perception rather than the distortion， which can be used super-resolve AIGC generated images. 
+- **August 28, 2023:** For real-world SR tasks, we released the pretrained models [RealworldSR-DiffIRS2-GANV2](https://drive.google.com/drive/folders/1G3Ep0xd-uBpIXGZFdWzH1uVCOpJaqkOF?usp=sharing) and [training files](DiffIR-RealSR/options/train_DiffIRS2_GAN_x4_V2.yml) that are more focused on perception rather than the distortion， which can be used super-resolve AIGC generated images. 
 - **July 20, 2023:** Training&Testing codes and pre-trained models are released!
 
 <hr />
