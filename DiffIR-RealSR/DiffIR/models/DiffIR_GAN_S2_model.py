@@ -293,11 +293,17 @@ class DiffIRGANS2Model(SRGANModel):
         for param_group in self.optimizer_g.param_groups:
             param_group['lr'] = lr 
         # usm sharpening
-        l1_gt = self.gt
-        percep_gt = self.gt
-        gan_gt = self.gt
+        l1_gt = self.gt_usm
+        percep_gt = self.gt_usm
+        gan_gt = self.gt_usm
+        if self.opt['l1_gt_usm'] is False:
+            l1_gt = self.gt
+        if self.opt['percep_gt_usm'] is False:
+            percep_gt = self.gt
+        if self.opt['gan_gt_usm'] is False:
+            gan_gt = self.gt
         
-        _, S1_IPR = self.model_Es1(self.lq,self.gt)
+        _, S1_IPR = self.model_Es1(self.lq,l1_gt)
 
         # optimize net_g
         for p in self.net_d.parameters():
