@@ -267,9 +267,9 @@ class DIRformer(nn.Module):
         return out_dec_level1
 
 class CPEN(nn.Module):
-    def __init__(self,n_feats = 64, n_encoder_res = 6):
+    def __init__(self,n_feats = 64, n_encoder_res = 6,scale=4):
         super(CPEN, self).__init__()
-        E1=[nn.Conv2d(51, n_feats, kernel_size=3, padding=1),
+        E1=[nn.Conv2d(3*scale*scale+3, n_feats, kernel_size=3, padding=1),
             nn.LeakyReLU(0.1, True)]
         E2=[
             common.ResBlock(
@@ -295,7 +295,7 @@ class CPEN(nn.Module):
             nn.Linear(n_feats * 4, n_feats * 4),
             nn.LeakyReLU(0.1, True)
         )
-        self.pixel_unshuffle = nn.PixelUnshuffle(4)
+        self.pixel_unshuffle = nn.PixelUnshuffle(scale)
     def forward(self, x,gt):
         gt0 = self.pixel_unshuffle(gt)
         x = torch.cat([x, gt0], dim=1)
@@ -311,6 +311,7 @@ class DiffIRS1(nn.Module):
         n_encoder_res=6,         
         inp_channels=3, 
         out_channels=3, 
+        scale=4,
         dim = 48,
         num_blocks = [4,6,6,8], 
         num_refinement_blocks = 4,
@@ -324,7 +325,8 @@ class DiffIRS1(nn.Module):
         # Generator
         self.G = DIRformer(        
         inp_channels=inp_channels, 
-        out_channels=out_channels, 
+        out_channels=out_channels,
+        scale = scale, 
         dim = dim,
         num_blocks = num_blocks, 
         num_refinement_blocks = num_refinement_blocks,
@@ -334,7 +336,7 @@ class DiffIRS1(nn.Module):
         LayerNorm_type = LayerNorm_type,   ## Other option 'BiasFree'
 )
 
-        self.E = CPEN(n_feats=64, n_encoder_res=n_encoder_res)
+        self.E = CPEN(n_feats=64, n_encoder_res=n_encoder_res,scale=scale)
 
 
     def forward(self, x, gt):
