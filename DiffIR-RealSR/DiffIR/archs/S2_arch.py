@@ -1,4 +1,3 @@
-
 import DiffIR.archs.common as common
 from ldm.ddpm import DDPM
 import DiffIR.archs.attention as attention
@@ -264,7 +263,7 @@ class DIRformer(nn.Module):
         return out_dec_level1
 
 class CPEN(nn.Module):
-    def __init__(self,n_feats = 64, n_encoder_res = 6):
+    def __init__(self,n_feats = 64, n_encoder_res = 6,scale=4):
         super(CPEN, self).__init__()
         E1=[nn.Conv2d(3, n_feats, kernel_size=3, padding=1),
             nn.LeakyReLU(0.1, True)]
@@ -338,6 +337,7 @@ class DiffIRS2(nn.Module):
         n_encoder_res=6,         
         inp_channels=3, 
         out_channels=3, 
+        scale=4,
         dim = 48,
         num_blocks = [4,6,6,8], 
         num_refinement_blocks = 4,
@@ -355,6 +355,7 @@ class DiffIRS2(nn.Module):
         self.G = DIRformer(        
         inp_channels=inp_channels, 
         out_channels=out_channels, 
+        scale = scale,
         dim = dim,
         num_blocks = num_blocks, 
         num_refinement_blocks = num_refinement_blocks,
@@ -363,7 +364,7 @@ class DiffIRS2(nn.Module):
         bias = bias,
         LayerNorm_type = LayerNorm_type,   ## Other option 'BiasFree'
         )
-        self.condition = CPEN(n_feats=64, n_encoder_res=n_encoder_res)
+        self.condition = CPEN(n_feats=64, n_encoder_res=n_encoder_res,scale = scale)
 
         self.denoise= denoise(n_feats=64, n_denoise_res=n_denoise_res,timesteps=timesteps)
 
