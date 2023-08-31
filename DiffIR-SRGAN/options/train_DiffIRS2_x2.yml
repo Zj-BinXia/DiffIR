@@ -5,7 +5,7 @@ scale: 2
 num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
 manual_seed: 0
 
-gt_size: 128
+gt_size: 256
 # dataset and data loader settings
 datasets:
   train:
@@ -24,13 +24,13 @@ datasets:
       # type: lmdb
 
 
-    gt_size: 128
+    gt_size: 256
     use_hflip: true
     use_rot: true
 
     # data loader
     num_worker_per_gpu: 6
-    batch_size_per_gpu: 8
+    batch_size_per_gpu: 9
     dataset_enlarge_ratio: 100
     prefetch_mode: ~
 
