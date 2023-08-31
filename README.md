@@ -3,6 +3,7 @@
 [Paper](https://arxiv.org/pdf/2303.09472.pdf) | [Project Page](https://github.com/Zj-BinXia/DiffIR) | [pretrained models](https://drive.google.com/drive/folders/10miVILiopE414GyaSZM3EFAZITeY9q0p?usp=sharing)
 
 #### News
+- **August 31, 2023:** For real-world SR and SRGAN tasks, we updated 2x SR training files. 
 - **August 28, 2023:** For real-world SR tasks, we released the pretrained models [RealworldSR-DiffIRS2-GANV2](https://drive.google.com/drive/folders/1H4DU-9fB15fSz-OFko00HlWYbNSqmAKq?usp=sharing) and [training files](DiffIR-RealSR/options/train_DiffIRS2_GAN_x4_V2.yml) that are more focused on perception rather than the distortion， which can be used to super-resolve AIGC generated images. 
 - **July 20, 2023:** Training&Testing codes and pre-trained models are released!
 
