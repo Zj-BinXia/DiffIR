@@ -9,7 +9,6 @@ from torch.nn import functional as F
 from einops import rearrange
 
 
-
 def to_3d(x):
     return rearrange(x, 'b c h w -> b (h w) c')
 
@@ -198,7 +197,15 @@ class DIRformer(nn.Module):
         ):
 
         super(DIRformer, self).__init__()
-
+        self.scale=scale
+        if self.scale == 2:
+            inp_channels =12
+            self.pixel_unshuffle=nn.PixelUnshuffle(2)
+        elif self.scale == 1:
+            inp_channels =48
+            self.pixel_unshuffle=nn.PixelUnshuffle(4)
+        else:
+            inp_channels =3
         self.patch_embed = OverlapPatchEmbed(inp_channels, dim)
 
         self.encoder_level1 = nn.Sequential(*[TransformerBlock(dim=dim, num_heads=heads[0], ffn_expansion_factor=ffn_expansion_factor, bias=bias, LayerNorm_type=LayerNorm_type) for i in range(num_blocks[0])])
@@ -227,13 +234,19 @@ class DIRformer(nn.Module):
         
         self.refinement = nn.Sequential(*[TransformerBlock(dim=int(dim*2**1), num_heads=heads[0], ffn_expansion_factor=ffn_expansion_factor, bias=bias, LayerNorm_type=LayerNorm_type) for i in range(num_refinement_blocks)])
         
-        modules_tail = [common.Upsampler(common.default_conv, scale, int(dim*2**1), act=False),
+        modules_tail = [common.Upsampler(common.default_conv, 4, int(dim*2**1), act=False),
                         common.default_conv(int(dim*2**1), out_channels, 3)]
         self.tail = nn.Sequential(*modules_tail)
-        self.scale=scale
+        
     def forward(self, inp_img,k_v):
+        if self.scale == 2:
+            feat = self.pixel_unshuffle(inp_img)
+        elif self.scale == 1:
+            feat = self.pixel_unshuffle(inp_img)
+        else:
+            feat = inp_img 
 
-        inp_enc_level1 = self.patch_embed(inp_img)
+        inp_enc_level1 = self.patch_embed(feat)
         out_enc_level1,_ = self.encoder_level1([inp_enc_level1,k_v])
         
         inp_enc_level2 = self.down1_2(out_enc_level1)
@@ -269,8 +282,16 @@ class DIRformer(nn.Module):
 class CPEN(nn.Module):
     def __init__(self,n_feats = 64, n_encoder_res = 6,scale=4):
         super(CPEN, self).__init__()
-        E1=[nn.Conv2d(3*scale*scale+3, n_feats, kernel_size=3, padding=1),
-            nn.LeakyReLU(0.1, True)]
+        self.scale=scale
+        if scale == 2:
+            E1=[nn.Conv2d(60, n_feats, kernel_size=3, padding=1),
+                nn.LeakyReLU(0.1, True)]
+        elif scale == 1:
+            E1=[nn.Conv2d(96, n_feats, kernel_size=3, padding=1),
+                nn.LeakyReLU(0.1, True)]
+        else:
+            E1=[nn.Conv2d(51, n_feats, kernel_size=3, padding=1),
+                nn.LeakyReLU(0.1, True)]
         E2=[
             common.ResBlock(
                 common.default_conv, n_feats, kernel_size=3
@@ -295,10 +316,17 @@ class CPEN(nn.Module):
             nn.Linear(n_feats * 4, n_feats * 4),
             nn.LeakyReLU(0.1, True)
         )
-        self.pixel_unshuffle = nn.PixelUnshuffle(scale)
+        self.pixel_unshuffle = nn.PixelUnshuffle(4)
+        self.pixel_unshufflev2 = nn.PixelUnshuffle(2)
     def forward(self, x,gt):
         gt0 = self.pixel_unshuffle(gt)
-        x = torch.cat([x, gt0], dim=1)
+        if self.scale == 2:
+            feat = self.pixel_unshufflev2(x)
+        elif self.scale == 1:
+            feat = self.pixel_unshuffle(x)
+        else:
+            feat = x  
+        x = torch.cat([feat, gt0], dim=1)
         fea = self.E(x).squeeze(-1).squeeze(-1)
         S1_IPR = []
         fea1 = self.mlp(fea)
@@ -340,8 +368,8 @@ class DiffIRS1(nn.Module):
 
 
     def forward(self, x, gt):
-        if self.training:
 
+        if self.training:          
             IPRS1, S1_IPR = self.E(x,gt)
 
             sr = self.G(x, IPRS1)
