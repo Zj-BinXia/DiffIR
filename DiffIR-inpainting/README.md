@@ -21,8 +21,6 @@ bash fetch_data/places_standard_test_val_prepare.sh
 bash fetch_data/places_standard_test_val_sample.sh
 bash fetch_data/places_standard_test_val_gen_masks.sh
 
-# Run training
-python3 bin/train.py -cn lama-fourier location=places_standard
 
 # To evaluate trained model and report metrics as in our paper
 # we need to sample previously unseen 30k images and generate masks for them
