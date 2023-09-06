@@ -11,20 +11,34 @@ manual_seed: 0
 datasets:
   # Uncomment these for validation
 
+  # test_1:
+  #   name: Urban100
+  #   type: PairedImageDataset
+  #   dataroot_gt: /root/datasets/benchmark/Urban100/HR
+  #   dataroot_lq: /root/datasets/benchmark/Urban100/LR
+  #   # filename_tmpl: '{}x4'
+  #   io_backend:
+  #     type: disk
+
+
+  # test_2:
+  #   name: DIV2K100
+  #   type: PairedImageDataset
+  #   dataroot_gt: /root/datasets/benchmark/DIV2K100/HR
+  #   dataroot_lq: /root/datasets/benchmark/DIV2K100/LR
+  #   io_backend:
+  #     type: disk
+      
   test_1:
     name: Urban100
-    type: PairedImageDataset
-    dataroot_gt: /root/datasets/benchmark/Urban100/HR
+    type: SingleImageDataset
     dataroot_lq: /root/datasets/benchmark/Urban100/LR
-    # filename_tmpl: '{}x4'
     io_backend:
       type: disk
 
-
   test_2:
     name: DIV2K100
-    type: PairedImageDataset
-    dataroot_gt: /root/datasets/benchmark/DIV2K100/HR
+    type: SingleImageDataset
     dataroot_lq: /root/datasets/benchmark/DIV2K100/LR
     io_backend:
       type: disk
@@ -85,11 +99,11 @@ val:
   save_img: True
   suffix: ~  # add suffix to saved images, if None, use exp name
 
-  metrics:
-    psnr: # metric name
-      type: calculate_psnr
-      crop_border: 4
-      test_y_channel: true
+  # metrics:
+  #   psnr: # metric name
+  #     type: calculate_psnr
+  #     crop_border: 4
+  #     test_y_channel: true
     
 
 
