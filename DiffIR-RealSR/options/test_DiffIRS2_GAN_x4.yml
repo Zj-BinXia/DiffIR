@@ -9,27 +9,48 @@ manual_seed: 0
 
 # dataset and data loader settings
 datasets:
-  val_1:
+  # val_1:
+  #   name: NTIRE2020-Track1
+  #   type: PairedImageDataset
+  #   dataroot_gt: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-gt
+  #   dataroot_lq: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-input
+  #   io_backend:
+  #     type: disk
+
+  # val_2:
+  #   name: AIM2019-Track2
+  #   type: PairedImageDataset
+  #   dataroot_gt: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-gt-clean
+  #   dataroot_lq: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-input-noisy
+  #   io_backend:
+  #     type: disk
+
+  # val_3:
+  #   name: RealSR
+  #   type: PairedImageDataset
+  #   dataroot_lq: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/LR
+  #   dataroot_gt: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/HR
+  #   io_backend:
+  #     type: disk
+
+  test_1:
     name: NTIRE2020-Track1
-    type: PairedImageDataset
-    dataroot_gt: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-gt
+    type: SingleImageDataset
     dataroot_lq: /mnt/bn/xiabinpaint/dataset/NTIRE2020-Track1/track1-valid-input
     io_backend:
       type: disk
 
-  val_2:
+  test_2:
     name: AIM2019-Track2
-    type: PairedImageDataset
-    dataroot_gt: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-gt-clean
+    type: SingleImageDataset
     dataroot_lq: /mnt/bn/xiabinpaint/dataset/AIM2019-Track2/valid-input-noisy
     io_backend:
       type: disk
-
-  val_3:
+      
+  test_3:
     name: RealSR
-    type: PairedImageDataset
+    type: SingleImageDataset
     dataroot_lq: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/LR
-    dataroot_gt: /mnt/bn/xiabinpaint/dataset/RealSR/Canon/Test/4/HR
     io_backend:
       type: disk
 
