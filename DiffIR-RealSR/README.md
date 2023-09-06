@@ -109,4 +109,11 @@ python3  Metric/LPIPS.py --folder_gt PathtoGT  --folder_restored PathtoSR
 python3  Metric/dists.py --folder_gt PathtoGT  --folder_restored PathtoSR
 ```
 
+## Inference
+
+```
+python3  inference_diffir.py --im_path PathtoLR --res_path ./outputs --model_path PathtoModel
+```
+
+
 
