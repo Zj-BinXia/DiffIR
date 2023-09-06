@@ -9,11 +9,18 @@ manual_seed: 0
 
 # dataset and data loader settings
 datasets:
-  val_1:
+  # val_1:
+  #   name: RealSR
+  #   type: PairedImageDataset
+  #   dataroot_lq: /mnt/bn/xiabinpaint/dataset/MyRealSRV3/Canon/Test/2/LR
+  #   dataroot_gt: /mnt/bn/xiabinpaint/dataset/MyRealSRV3/Canon/Test/2/HR
+  #   io_backend:
+  #     type: disk
+      
+  test_1:
     name: RealSR
-    type: PairedImageDataset
+    type: SingleImageDataset
     dataroot_lq: /mnt/bn/xiabinpaint/dataset/MyRealSRV3/Canon/Test/2/LR
-    dataroot_gt: /mnt/bn/xiabinpaint/dataset/MyRealSRV3/Canon/Test/2/HR
     io_backend:
       type: disk
 
