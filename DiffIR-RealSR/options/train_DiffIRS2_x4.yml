@@ -1,5 +1,5 @@
 # general settings
-name: train_DiffIRS2
+name: train_DiffIRS2_x4
 model_type: DiffIRS2Model
 scale: 4
 num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
