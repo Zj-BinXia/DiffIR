@@ -127,8 +127,8 @@ network_d:
 # path
 path:
   # use the pre-trained Real-ESRNet model
-  pretrain_network_S1: ./experiments/train_DiffIRS1/models/net_g_latest.pth
-  pretrain_network_g: ./experiments/train_DiffIRS2/models/net_g_latest.pth
+  pretrain_network_S1: ./experiments/train_DiffIRS1_x2/models/net_g_latest.pth
+  pretrain_network_g: ./experiments/train_DiffIRS2_x2/models/net_g_latest.pth
   param_key_g: params_ema
   strict_load_g: True
   resume_state: ~
