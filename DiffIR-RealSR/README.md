@@ -112,7 +112,11 @@ python3  Metric/dists.py --folder_gt PathtoGT  --folder_restored PathtoSR
 ## Inference
 
 ```
-python3  inference_diffir.py --im_path PathtoLR --res_path ./outputs --model_path PathtoModel
+python3  inference_diffir.py --im_path PathtoLR --res_path ./outputs --model_path Pathto4xModel --scale 4
+
+python3  inference_diffir.py --im_path PathtoLR --res_path ./outputs --model_path Pathto2xModel --scale 2
+
+python3  inference_diffir.py --im_path PathtoLR --res_path ./outputs --model_path Pathto1xModel --scale 1
 ```
 
 
