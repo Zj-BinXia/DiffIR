@@ -76,7 +76,7 @@ path:
 
 
 val:
-  window_size: 8
+  window_size: 16
   save_img: True
   suffix: ~  # add suffix to saved images, if None, use exp name
 
