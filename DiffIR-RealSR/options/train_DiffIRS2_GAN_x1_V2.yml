@@ -7,8 +7,8 @@ manual_seed: 0
 
 # ----------------- options for synthesizing training data in RealESRGANModel ----------------- #
 # USM the ground-truth
-l1_gt_usm: False
-percep_gt_usm: False
+l1_gt_usm: True
+percep_gt_usm: True
 gan_gt_usm: False
 
 # the first degradation process
