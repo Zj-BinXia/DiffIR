@@ -16,8 +16,13 @@ import argparse
 from torch.nn import functional as F
 
 
-def pad_test(lq):  
-    window_size = 8      
+def pad_test(lq,scale):
+    if scale==1:
+        window_size = 32
+    elif scale==2:
+        window_size = 16
+    else:
+        window_size = 8      
     mod_pad_h, mod_pad_w = 0, 0
     _, _, h, w = lq.size()
     if h % window_size != 0:
@@ -52,7 +57,7 @@ if __name__ == '__main__':
             im = cv2.imread(path)
             im = img2tensor(im)
             im = im.unsqueeze(0).cuda(0)/255.
-            lq,mod_pad_h,mod_pad_w= pad_test(im)
+            lq,mod_pad_h,mod_pad_w= pad_test(im,args.scale)
             sr = model(lq)
             _, _, h, w = sr.size()
             sr = sr[:, :, 0:h - mod_pad_h * 4, 0:w - mod_pad_w * 4]
