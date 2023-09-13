@@ -165,7 +165,7 @@ train:
 # Uncomment these for validation
 # validation settings
 val:
-  window_size: 8
+  window_size: 16
   val_freq: !!float 5e3
   save_img: False
 
