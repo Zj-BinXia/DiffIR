@@ -1,11 +1,10 @@
 # general settings
-name: finetune_DiffIRGANS2_x1_400k
+name: finetune_DiffIRGANS2v2_x1_400k
 model_type: DiffIRGANS2Model
 scale: 1
 num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
 manual_seed: 0
 
-# ----------------- options for synthesizing training data in RealESRGANModel ----------------- #
 # USM the ground-truth
 l1_gt_usm: True
 percep_gt_usm: True
@@ -126,7 +125,6 @@ network_d:
 
 # path
 path:
-  # use the pre-trained Real-ESRNet model
   pretrain_network_S1: ./experiments/train_DiffIRS1_x1/models/net_g_latest.pth
   pretrain_network_g: ./experiments/train_DiffIRS2_x1/models/net_g_latest.pth
   param_key_g: params_ema
