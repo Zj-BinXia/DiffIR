@@ -135,6 +135,8 @@ class DiffIRGANS2Model(SRGANModel):
             # training data synthesis
             self.gt = data['gt'].to(self.device)
             self.gt_usm = self.usm_sharpener(self.gt)
+            if self.opt['l1_gt_usm']:
+                self.gt = self.gt_usm
 
             self.kernel1 = data['kernel1'].to(self.device)
             self.kernel2 = data['kernel2'].to(self.device)
