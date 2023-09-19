@@ -1,5 +1,5 @@
 # general settings
-name: train_DiffIRGANS2_x1_400k
+name: finetune_DiffIRGANS2_x1_400k
 model_type: DiffIRGANS2Model
 scale: 1
 num_gpu: auto  # auto: can infer from your visible devices automatically. official: 4 GPUs
