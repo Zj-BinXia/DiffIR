@@ -69,6 +69,10 @@ sh trainS2.sh
 #set the 'pretrain_network_g' and 'pretrain_network_S1' in ./options/train_DiffIRS2_GAN_x4.yml to be the path of DiffIR_S2 and DiffIR_S1's trained model, respectively.
 
 sh train_DiffIRS2_GAN.sh
+
+or
+
+sh train_DiffIRS2_GANv2.sh
 ```
 
 **Note:** The above training script uses 8 GPUs by default. 
@@ -86,14 +90,17 @@ Specify the items "pretrain_network_S1", "pretrain_network_g", and "pretrain_net
 
 #### Step 3 Prepare fine-tuning dataset
 
-Deal your fine-tuning datasets as <td align="center"><a href="DiffIR-RealSR/README.md#training">Dataset Preparation</a></td>
+Deal your fine-tuning datasets as Dataset Preparation.
 
 #### Step 4 Specify fine-tuning dataset Path
 
 Specify the items "dataroot_gt" and "meta_info" items of finetune_DiffIRS2_GAN_x4_V2.yml to your GT datasets and the generated meta_info files.
 
+#### Step 5 fine-tuning models
 
-
+```
+sh finetune_DiffIRS2_GANv2.sh
+```
 
 
 ## Evaluation
