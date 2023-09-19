@@ -135,8 +135,6 @@ class DiffIRGANS2Model(SRGANModel):
             # training data synthesis
             self.gt = data['gt'].to(self.device)
             self.gt_usm = self.usm_sharpener(self.gt)
-            if self.opt['l1_gt_usm']:
-                self.gt = self.gt_usm
 
             self.kernel1 = data['kernel1'].to(self.device)
             self.kernel2 = data['kernel2'].to(self.device)
@@ -146,7 +144,10 @@ class DiffIRGANS2Model(SRGANModel):
 
             # ----------------------- The first degradation process ----------------------- #
             # blur
-            out = filter2D(self.gt, self.kernel1)
+            if self.opt['l1_gt_usm']:
+                out = filter2D(self.gt_usm, self.kernel1)
+            else:
+                out = filter2D(self.gt, self.kernel1)
             # random resize
             updown_type = random.choices(['up', 'down', 'keep'], self.opt['resize_prob'])[0]
             if updown_type == 'up':
