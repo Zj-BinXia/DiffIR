@@ -73,6 +73,29 @@ sh train_DiffIRS2_GAN.sh
 
 **Note:** The above training script uses 8 GPUs by default. 
 
+## Finetuning
+
+#### Step 1 Download pre-trained Model
+
+Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd-uBpIXGZFdWzH1uVCOpJaqkOF?usp=drive_link) and place it in `./experiments/`
+
+#### Step 2 Specify model Path
+
+Specify the items "pretrain_network_S1", "pretrain_network_g", and "pretrain_network_d" items of finetune_DiffIRS2_GAN_x4_V2.yml to the downloaded pretrained model path.
+
+
+#### Step 3 Prepare fine-tuning dataset
+
+Deal your fine-tuning datasets as <td align="center"><a href="DiffIR-RealSR/README.md#training">Dataset Preparation</a></td>
+
+#### Step 4 Specify fine-tuning dataset Path
+
+Specify the items "dataroot_gt" and "meta_info" items of finetune_DiffIRS2_GAN_x4_V2.yml to your GT datasets and the generated meta_info files.
+
+
+
+
+
 ## Evaluation
 
 Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd-uBpIXGZFdWzH1uVCOpJaqkOF?usp=drive_link) and place it in `./experiments/`
