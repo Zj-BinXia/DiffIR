@@ -90,6 +90,8 @@ Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd
 
 - **DiffIRS2-GANx4-V2**, **DiffIRS2-GANx2-V2**, **DiffIRS2-GANx1-V2** would have better perceptual quality (including better denoising ability).
 
+- V1 and V2 models have the same structure, and they can use the same evaluation and inference code.
+
 - You should choose the V1 or V2 models according to your requirements.
 
 #### Testing on NTIRE2020-Track1 dataset
