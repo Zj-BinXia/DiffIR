@@ -86,11 +86,11 @@ Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd
 
 **Note**
 
-DiffIRS2-GANx4, DiffIRS2-GANx2, DiffIRS2-GANx1 would have better fidelity.
+- **DiffIRS2-GANx4**, **DiffIRS2-GANx2**, **DiffIRS2-GANx1** would have better fidelity.
 
-DiffIRS2-GANx4-V2, DiffIRS2-GANx2-V2, DiffIRS2-GANx1-V2 would have better perceptual quality (including better denoising ability).
+- **DiffIRS2-GANx4-V2**, **DiffIRS2-GANx2-V2**, **DiffIRS2-GANx1-V2** would have better perceptual quality (including better denoising ability).
 
-You should choose the V1 or V2 models according to your requirements.
+- You should choose the V1 or V2 models according to your requirements.
 
 #### Testing on NTIRE2020-Track1 dataset
 
