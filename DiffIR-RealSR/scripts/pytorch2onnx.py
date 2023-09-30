@@ -7,10 +7,6 @@ from DiffIR.archs.S2_arch import DiffIRS2
 def main(args):
     # An instance of the model
     model = DiffIRS2( n_encoder_res= 9, dim= 64, scale=args.scale,num_blocks= [13,1,1,1],num_refinement_blocks= 13,heads= [1,2,4,8], ffn_expansion_factor= 2.2,LayerNorm_type= "BiasFree")
-    if args.params:
-        keyname = 'params'
-    else:
-        keyname = 'params_ema'
     loadnet = torch.load(args.model_path, map_location=torch.device('cpu'))
     model.load_state_dict(loadnet['params_ema'], strict=True)
     # set the train mode to false since we will only run the forward pass.
