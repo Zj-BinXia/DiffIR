@@ -1,17 +1,14 @@
 import argparse
 import torch
 import torch.onnx
-from basicsr.archs.rrdbnet_arch import RRDBNet
+from DiffIR.archs.S2_arch import DiffIRS2
 
 
 def main(args):
     # An instance of the model
-    model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=4)
-    if args.params:
-        keyname = 'params'
-    else:
-        keyname = 'params_ema'
-    model.load_state_dict(torch.load(args.input)[keyname])
+    model = DiffIRS2( n_encoder_res= 9, dim= 64, scale=args.scale,num_blocks= [13,1,1,1],num_refinement_blocks= 13,heads= [1,2,4,8], ffn_expansion_factor= 2.2,LayerNorm_type= "BiasFree")
+    loadnet = torch.load(args.model_path, map_location=torch.device('cpu'))
+    model.load_state_dict(loadnet['params_ema'], strict=True)
     # set the train mode to false since we will only run the forward pass.
     model.train(False)
     model.cpu().eval()
@@ -27,10 +24,9 @@ def main(args):
 if __name__ == '__main__':
     """Convert pytorch model to onnx models"""
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--input', type=str, default='experiments/pretrained_models/RealESRGAN_x4plus.pth', help='Input model path')
-    parser.add_argument('--output', type=str, default='realesrgan-x4.onnx', help='Output onnx path')
-    parser.add_argument('--params', action='store_false', help='Use params instead of params_ema')
+    parser.add_argument('--scale', type=int, default=4)
+    parser.add_argument('--model_path', type=str, default='./experiments/DiffIRS2-GANv2.pth')
+    parser.add_argument('--output', type=str, default='DiffIRS2-GANv2-x4.onnx', help='Output onnx path')
     args = parser.parse_args()
 
     main(args)
