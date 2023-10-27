@@ -58,7 +58,8 @@ if __name__ == '__main__':
             im = img2tensor(im)
             im = im.unsqueeze(0).cuda(0)/255.
             lq,mod_pad_h,mod_pad_w= pad_test(im,args.scale)
-            sr = model(lq)
+            with torch.no_grad():
+                sr = model(lq)
             _, _, h, w = sr.size()
             sr = sr[:, :, 0:h - mod_pad_h * args.scale, 0:w - mod_pad_w * args.scale]
             im_sr = tensor2img(sr, rgb2bgr=True, out_type=np.uint8, min_max=(0, 1))
