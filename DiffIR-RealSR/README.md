@@ -51,8 +51,14 @@ You can merge several folders into one meta_info txt. Here is the example:
 ```
 
 ### 2.  Pretrain DiffIR_S1
+Multi GPUs
 ```
 sh trainS1.sh
+```
+
+or single GPU
+```
+python3 DiffIR/train.py -opt options/train_DiffIRS1_x4.yml 
 ```
 
 ### 3.  Train DiffIR_S2
