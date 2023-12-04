@@ -38,9 +38,9 @@ class DiffIRGANS2Model(SRGANModel):
 
         self.net_g_S1.eval()
         if self.opt['dist']:
-            self.model_Eta = self.net_g_S1.module.E
+            self.model_Es1 = self.net_g_S1.module.E
         else:
-            self.model_Eta = self.net_g_S1.module.E
+            self.model_Es1 = self.net_g_S1.module.E
 
         if self.is_train:
             self.encoder_iter = opt["train"]["encoder_iter"]
