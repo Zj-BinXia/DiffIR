@@ -3,6 +3,7 @@
 [Paper](https://arxiv.org/pdf/2303.09472.pdf) | [Project Page](https://github.com/Zj-BinXia/DiffIR) | [pretrained models](https://drive.google.com/drive/folders/10miVILiopE414GyaSZM3EFAZITeY9q0p?usp=sharing)
 
 #### News
+- **Dec 19, 2023:**  We propose reference-based DiffIR (DiffRIR) to alleviate texture, brightness, and contrast disparities between generated and preserved regions during image editing, such as inpainting and outpainting. All training and inference codes and pre-trained models (x1, x2, x4) are released at [Github](https://github.com/Zj-BinXia/DiffRIR)
 - **Sep 10, 2023:** For real-world SR, we release x1 and x2 pre-trained models.
 - **Sep 6, 2023:** For real-world SR and SRGAN, we can test [LR images without GT images](DiffIR-RealSR/options/test_DiffIRS2_GAN_x4.yml) and [inference](DiffIR-RealSR/inference_diffir.py). 
 - **August 31, 2023:** For real-world SR and SRGAN tasks, we updated 2x SR training files. 
