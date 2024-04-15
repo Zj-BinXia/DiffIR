@@ -102,7 +102,7 @@ Download the pre-trained [model](https://drive.google.com/drive/folders/1G3Ep0xd
 
 #### Testing on NTIRE2020-Track1 dataset
 
-Download  NTIRE2020 datasets [Link](https://competitions.codalab.org/competitions/22220)
+Download  NTIRE2020 datasets [official link](https://competitions.codalab.org/competitions/22220) or [Google Drive](https://drive.google.com/drive/folders/1P5x8wuty3IVj7aKoDe6uZy9pA19S9rrQ?usp=sharing).
 
 - Testing
 ```
