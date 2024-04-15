@@ -36,7 +36,7 @@ cd lama
 export TORCH_HOME=$(pwd) && export PYTHONPATH=$(pwd)
 
 # Download CelebA-HQ dataset
-# Download data256x256.zip from https://drive.google.com/drive/folders/11Vz0fqHS2rXDb5pprgTjpD7S2BAJhi1P
+# Download data256x256.zip from https://drive.google.com/drive/folders/11Vz0fqHS2rXDb5pprgTjpD7S2BAJhi1P or https://drive.google.com/file/d/1foD5VnGxBJOg8N__OesoDuYY4DyUL-xE/view?usp=drive_link
 
 # unzip & split into train/test/visualization & create config for it
 bash fetch_data/celebahq_dataset_prepare.sh
