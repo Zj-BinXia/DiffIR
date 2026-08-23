@@ -271,7 +271,7 @@ def downsample_with_averaging(array):
 
   output_shape = tuple(int(math.ceil(s / f)) for s, f in zip(array.shape, factor))
   temp = np.zeros(output_shape, float)
-  counts = np.zeros(output_shape, np.int)
+  counts = np.zeros(output_shape, int)
   for offset in np.ndindex(factor):
       part = array[tuple(np.s_[o::f] for o, f in zip(offset, factor))]
       indexing_expr = tuple(np.s_[:s] for s in part.shape)
